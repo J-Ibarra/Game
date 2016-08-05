@@ -66,7 +66,7 @@ public class Main extends Canvas implements Runnable {
             return;
         }
 
-        level.render(screen, 0, 0);
+        level.render(screen, -10, -10);
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {

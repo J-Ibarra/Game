@@ -1,10 +1,7 @@
 package com.jcs.level;
 
 import com.jcs.gfx.Screen;
-import com.jcs.level.tiles.GrassTile;
-import com.jcs.level.tiles.RockTile;
-import com.jcs.level.tiles.TestTile;
-import com.jcs.level.tiles.WaterTile;
+import com.jcs.level.tiles.*;
 
 /**
  * Created by Jcs on 5/8/2016.
@@ -17,7 +14,9 @@ public class Tile {
 
     public static Tile grass = new GrassTile(0);
     public static Tile water = new WaterTile(1);
-    public static Tile rock = new RockTile(2);
+    public static Tile dirt =  new DirtTile(2);
+    public static Tile rock = new RockTile(3);
+
 
     public final int id;
     public boolean isGrass = false;

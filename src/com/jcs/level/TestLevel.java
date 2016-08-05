@@ -1,7 +1,5 @@
 package com.jcs.level;
 
-import com.jcs.level.tiles.RockTile;
-
 import java.util.Random;
 
 /**
@@ -18,7 +16,7 @@ public class TestLevel extends Level {
         tiles = new int[width * height];
         Random random = new Random();
         for (int i = 0; i < tiles.length; i++) {
-            tiles[i]  = random.nextInt(2);
+            tiles[i]  = random.nextInt(3);
         }
     }
 }
