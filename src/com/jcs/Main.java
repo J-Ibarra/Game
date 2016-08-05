@@ -52,7 +52,7 @@ public class Main extends Canvas implements Runnable {
     private void init() throws Exception {
         sheet = new SpriteSheet("SpriteSheet.png");
         screen = new Screen(WIDTH, HEIGHT, sheet);
-        level = new TestLevel(8, 8);
+        level = new TestLevel(12, 9);
     }
 
     private void update() {

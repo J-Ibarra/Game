@@ -54,7 +54,7 @@ public class Level {
     }
 
     public Tile getTile(int x, int y) {
-        if (x < 0 || y < 0 || x >= width - 1 || y >= height - 1)
+        if (x < 0 || y < 0 || x >= width  || y >= height )
             return Tile.rock;
         return Tile.tiles[tiles[x + y * width]];
     }
