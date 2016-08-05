@@ -9,6 +9,7 @@ public class Level {
 
     public final int width, height;
     public int[] tiles;
+    public int updateCount = 0;
 
     public int grassColor = 141;
     public int dirtColor = 322;
@@ -19,6 +20,9 @@ public class Level {
         height = h;
 
         init();
+    }
+    public void update() {
+        updateCount++;
     }
 
     public void init() {

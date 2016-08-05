@@ -56,7 +56,7 @@ public class Main extends Canvas implements Runnable {
     }
 
     private void update() {
-
+        level.update();
     }
 
     private void render() {
