@@ -2,6 +2,8 @@ package com.jcs;
 
 import com.jcs.gfx.*;
 import com.jcs.gfx.Color;
+import com.jcs.level.Level;
+import com.jcs.level.TestLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +26,7 @@ public class Main extends Canvas implements Runnable {
 
     private SpriteSheet sheet;
     private Screen screen;
+    private Level level;
 
     public Main() throws Exception {
         Dimension dimension = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
@@ -49,6 +52,7 @@ public class Main extends Canvas implements Runnable {
     private void init() throws Exception {
         sheet = new SpriteSheet("SpriteSheet.png");
         screen = new Screen(WIDTH, HEIGHT, sheet);
+        level = new TestLevel(8, 8);
     }
 
     private void update() {
@@ -61,6 +65,8 @@ public class Main extends Canvas implements Runnable {
             createBufferStrategy(3);
             return;
         }
+
+        level.render(screen, 0, 0);
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
