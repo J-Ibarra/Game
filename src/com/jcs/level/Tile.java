@@ -14,8 +14,9 @@ public class Tile {
 
     public static Tile grass = new GrassTile(0);
     public static Tile water = new WaterTile(1);
-    public static Tile dirt =  new DirtTile(2);
-    public static Tile rock = new RockTile(3);
+    public static Tile dirt = new DirtTile(2);
+    public static Tile sand = new SandTile(3);
+    public static Tile rock = new RockTile(4);
 
 
     public final int id;

@@ -17,14 +17,7 @@ public class DirtTile extends Tile {
     @Override
     public void render(Screen screen, Level level, int x, int y) {
 
-        int col = Color.get(level.dirtColor, level.dirtColor, level.dirtColor + 111, level.dirtColor + 111);
-
-
-        boolean u = level.getTile(x, y - 1).isGrass;
-        boolean d = level.getTile(x, y + 1).isGrass;
-        boolean l = level.getTile(x - 1, y).isGrass;
-        boolean r = level.getTile(x + 1, y).isGrass;
-
+        int col = Color.get(level.dirtColor, -1, -1, level.dirtColor + 111);
 
         screen.render(x * 16 + 0, y * 16 + 0, 0, col);
 

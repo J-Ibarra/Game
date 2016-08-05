@@ -5,24 +5,25 @@ import com.jcs.gfx.Screen;
 import com.jcs.level.Level;
 import com.jcs.level.Tile;
 
-public class GrassTile extends Tile {
+/**
+ * Created by Jcs on 5/8/2016.
+ */
+public class SandTile extends Tile {
 
-    public GrassTile(int id) {
+    public SandTile(int id) {
         super(id);
-        isGrass = true;
+        isSand = true;
     }
 
     public void render(Screen screen, Level level, int x, int y) {
 
-        int col = Color.get(level.grassColor, -1, -1, level.grassColor + 111);
+        int col = Color.get(level.sandColor, -1, -1, level.sandColor - 110);
+        int transitionColor = Color.get(level.sandColor - 110, level.sandColor, level.sandColor - 110, level.dirtColor);
 
-        int transitionColor = Color.get(level.grassColor - 111, level.grassColor, level.grassColor + 111,
-                level.dirtColor);
-
-        boolean u = level.getTile(x, y - 1).isGrass;
-        boolean d = level.getTile(x, y + 1).isGrass;
-        boolean l = level.getTile(x - 1, y).isGrass;
-        boolean r = level.getTile(x + 1, y).isGrass;
+        boolean u = level.getTile(x, y - 1).isSand;
+        boolean d = level.getTile(x, y + 1).isSand;
+        boolean l = level.getTile(x - 1, y).isSand;
+        boolean r = level.getTile(x + 1, y).isSand;
 
         if (u && l)
             screen.render(x * 16 + 0, y * 16 + 0, 0, col);
@@ -45,5 +46,4 @@ public class GrassTile extends Tile {
             screen.render(x * 16 + 8, y * 16 + 8, (r ? 1 : 2) + (d ? 2 : 3) * 32, transitionColor);
 
     }
-
 }

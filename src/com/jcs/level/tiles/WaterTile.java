@@ -23,7 +23,7 @@ public class WaterTile extends Tile {
 
         wRandom.setSeed(level.updateCount / 20);
 
-        int col = Color.get(005, 005, 225, 225);
+        int col = Color.get(005, -1, -1, 225);
         int transitionColor1 = Color.get(3, 005, level.dirtColor - 111, level.dirtColor);
         int transitionColor2 = Color.get(3, 005, level.sandColor - 111, level.sandColor);
 

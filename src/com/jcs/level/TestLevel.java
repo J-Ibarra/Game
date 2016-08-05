@@ -16,7 +16,7 @@ public class TestLevel extends Level {
         tiles = new int[width * height];
         Random random = new Random();
         for (int i = 0; i < tiles.length; i++) {
-            tiles[i]  = random.nextInt(3);
+            tiles[i]  = random.nextInt(4);
         }
     }
 }
