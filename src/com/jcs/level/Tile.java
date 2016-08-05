@@ -2,6 +2,7 @@ package com.jcs.level;
 
 import com.jcs.gfx.Screen;
 import com.jcs.level.tiles.GrassTile;
+import com.jcs.level.tiles.RockTile;
 import com.jcs.level.tiles.TestTile;
 
 /**
@@ -12,7 +13,9 @@ public class Tile {
     public static Tile[] tiles = new Tile[256];
 
     public static Tile test = new TestTile(255);
+
     public static Tile grass = new GrassTile(1);
+    public static Tile rock = new RockTile(2);
 
     public final int id;
     public boolean isGrass;
