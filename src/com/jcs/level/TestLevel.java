@@ -1,8 +1,5 @@
 package com.jcs.level;
 
-import com.jcs.gfx.Screen;
-import com.jcs.level.Level;
-
 /**
  * Created by Jcs on 5/8/2016.
  */
@@ -17,7 +14,7 @@ public class TestLevel extends Level {
         tiles = new int[width * height];
 
         for (int i = 0; i < tiles.length; i++) {
-            tiles[i]  = Tile.test.id;
+            tiles[i]  = Tile.grass.id;
         }
     }
 }

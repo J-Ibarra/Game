@@ -10,6 +10,10 @@ public class Level {
     public final int width, height;
     public int[] tiles;
 
+    public int grassColor = 141;
+    public int dirtColor = 322;
+    public int sandColor = 550;
+
     public Level(int w, int h) {
         width = w;
         height = h;
@@ -42,7 +46,7 @@ public class Level {
     }
 
     private void renderSprites(Screen screen, int xo, int yo, int xw, int yh) {
-        
+
     }
 
     public Tile getTile(int x, int y) {
