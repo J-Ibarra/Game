@@ -24,6 +24,7 @@ public class Main extends Canvas implements Runnable {
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
+    private InputHandler key;
     private SpriteSheet sheet;
     private Screen screen;
     private Level level;
@@ -50,12 +51,14 @@ public class Main extends Canvas implements Runnable {
     }
 
     private void init() throws Exception {
+        key = new InputHandler(this);
         sheet = new SpriteSheet("SpriteSheet.png");
         screen = new Screen(WIDTH, HEIGHT, sheet);
         level = new TestLevel(12, 9);
     }
 
     private void update() {
+        key.update();
         level.update();
     }
 
@@ -63,6 +66,7 @@ public class Main extends Canvas implements Runnable {
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
             createBufferStrategy(3);
+            requestFocus();
             return;
         }
 
