@@ -12,9 +12,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 public class Main extends Canvas implements Runnable {
-    private boolean running = false;
+    private volatile boolean running = false;
 
-    public static final String TITTLE = "Java 2D Game";
+    public static final String TITTLE = "Java 2D Game | Dreams Demons";
     public static final int SCALE = 3;
     public static final int WIDTH = 600 / SCALE;
     public static final int HEIGHT = 400 / SCALE;
@@ -118,9 +118,13 @@ public class Main extends Canvas implements Runnable {
         }
     }
 
-    public void start() {
+    public synchronized void start() {
         running = true;
         new Thread(this, "Jcs Game Loop").start();
+    }
+
+    public synchronized void stop() {
+        running = false;
     }
 
     public static void main(String[] args) {
