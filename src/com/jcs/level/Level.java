@@ -1,6 +1,11 @@
 package com.jcs.level;
 
+import com.jcs.entity.Entity;
+import com.jcs.entity.Player;
 import com.jcs.gfx.Screen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jcs on 5/8/2016.
@@ -15,14 +20,22 @@ public class Level {
     public int dirtColor = 322;
     public int sandColor = 550;
 
+    private List<Entity> entities = new ArrayList<>();
+    public Player player;
+
     public Level(int w, int h) {
         width = w;
         height = h;
 
         init();
     }
+
     public void update() {
         updateCount++;
+
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).update();
+        }
     }
 
     public void init() {
@@ -50,11 +63,25 @@ public class Level {
     }
 
     private void renderSprites(Screen screen, int xo, int yo, int xw, int yh) {
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).render(screen);
+        }
+    }
 
+    public void add(Entity entity) {
+        if (entity instanceof Player) {
+            player = (Player) entity;
+        }
+        entities.add(entity);
+        entity.init(this);
+    }
+
+    public void remove(Entity e) {
+        entities.remove(e);
     }
 
     public Tile getTile(int x, int y) {
-        if (x < 0 || y < 0 || x >= width  || y >= height )
+        if (x < 0 || y < 0 || x >= width || y >= height)
             return Tile.rock;
         return Tile.tiles[tiles[x + y * width]];
     }

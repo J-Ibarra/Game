@@ -10,7 +10,10 @@ public class InputHandler implements KeyListener {
 
     List<Key> keys = new ArrayList<>();
 
-    public Key testKey = new Key();
+    public Key up = new Key();
+    public Key down = new Key();
+    public Key left = new Key();
+    public Key right = new Key();
 
     private Main main;
 
@@ -33,8 +36,14 @@ public class InputHandler implements KeyListener {
     }
 
     private void toggle(KeyEvent e, boolean pressed) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE)
-            testKey.toggle(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_W)
+            up.toggle(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_S)
+            down.toggle(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_A)
+            left.toggle(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_D)
+            right.toggle(pressed);
     }
 
     @Override

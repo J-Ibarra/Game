@@ -1,5 +1,6 @@
 package com.jcs;
 
+import com.jcs.entity.Player;
 import com.jcs.gfx.*;
 import com.jcs.gfx.Color;
 import com.jcs.level.Level;
@@ -28,6 +29,7 @@ public class Main extends Canvas implements Runnable {
     private SpriteSheet sheet;
     private Screen screen;
     private Level level;
+    private Player player;
 
     public Main() throws Exception {
         Dimension dimension = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
@@ -54,7 +56,10 @@ public class Main extends Canvas implements Runnable {
         key = new InputHandler(this);
         sheet = new SpriteSheet("SpriteSheet.png");
         screen = new Screen(WIDTH, HEIGHT, sheet);
-        level = new TestLevel(12, 9);
+
+        player = new Player(this, key);
+        level = new TestLevel(64, 64);
+        level.add(player);
     }
 
     private void update() {
@@ -70,7 +75,18 @@ public class Main extends Canvas implements Runnable {
             return;
         }
 
-        level.render(screen, 0, 0);
+        int xScroll = player.x - (screen.width - 15) / 2;
+        int yScroll = player.y - (screen.height - 15) / 2;
+        if (xScroll < 15)
+            xScroll = 15;
+        if (yScroll < 15)
+            yScroll = 15;
+        if (xScroll > level.width * 16 - screen.width - 16)
+            xScroll = level.width * 16 - screen.width - 16;
+        if (yScroll > level.height * 16 - screen.height - 16)
+            yScroll = level.height * 16 - screen.height - 16;
+
+        level.render(screen, xScroll, yScroll);
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
@@ -82,12 +98,16 @@ public class Main extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        g.setColor(java.awt.Color.ORANGE);
+        g.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
+        g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
         g.dispose();
         bs.show();
     }
 
     private void oneSecond(int ups, int fps) {
-        frame.setTitle(TITTLE + " | ups: " + ups + ", fps: " + fps);
+        frame.setTitle(TITTLE + " || ups: " + ups + ", fps: " + fps + " ||" +
+                "player x: " + (player.x >> 4) + "player y: " + (player.y >> 4));
     }
 
     @Override
