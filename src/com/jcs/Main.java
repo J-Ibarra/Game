@@ -3,7 +3,9 @@ package com.jcs;
 import com.jcs.entity.Player;
 import com.jcs.gfx.*;
 import com.jcs.gfx.Color;
+import com.jcs.level.HouseLevel;
 import com.jcs.level.Level;
+import com.jcs.level.LoadLevel;
 import com.jcs.level.TestLevel;
 
 import javax.swing.*;
@@ -13,149 +15,153 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 public class Main extends Canvas implements Runnable {
-    private volatile boolean running = false;
+	private volatile boolean running = false;
 
-    public static final String TITTLE = "Java 2D Game | Dreams Demons";
-    public static final int SCALE = 3;
-    public static final int WIDTH = 600 / SCALE;
-    public static final int HEIGHT = 400 / SCALE;
+	public static final String TITTLE = "Java 2D Game | Dreams Demons";
+	public static final int SCALE = 3;
+	public static final int WIDTH = 600 / SCALE;
+	public static final int HEIGHT = 400 / SCALE;
 
-    private JFrame frame;
+	private JFrame frame;
 
-    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
-    private InputHandler key;
-    private SpriteSheet sheet;
-    private Screen screen;
-    private Level level;
-    private Player player;
+	public static SpriteSheet sheet;
+	public static SpriteSheet basic;
+	private InputHandler key;
 
-    public Main() throws Exception {
-        Dimension dimension = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
-        setMaximumSize(dimension);
-        setMinimumSize(dimension);
-        setPreferredSize(dimension);
+	private Screen screen;
+	private Level level;
+	private Player player;
 
-        init();
+	public Main() throws Exception {
+		Dimension dimension = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
+		setMaximumSize(dimension);
+		setMinimumSize(dimension);
+		setPreferredSize(dimension);
 
-        frame = new JFrame(TITTLE);
+		init();
 
-        frame.setLayout(new BorderLayout());
-        frame.add(this, BorderLayout.CENTER);
-        frame.pack();
+		frame = new JFrame(TITTLE);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setAlwaysOnTop(true);
-        frame.setVisible(true);
-    }
+		frame.setLayout(new BorderLayout());
+		frame.add(this, BorderLayout.CENTER);
+		frame.pack();
 
-    private void init() throws Exception {
-        key = new InputHandler(this);
-        sheet = new SpriteSheet("SpriteSheet.png");
-        screen = new Screen(WIDTH, HEIGHT, sheet);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setAlwaysOnTop(true);
+		frame.setVisible(true);
+	}
 
-        player = new Player(this, key);
-        level = new TestLevel(64, 64);
-        level.add(player);
-    }
+	private void init() throws Exception {
+		sheet = new SpriteSheet("SpriteSheet.png", 32, 32);
+		basic = new SpriteSheet("warrior.png", 4, 8);
 
-    private void update() {
-        key.update();
-        level.update();
-    }
+		key = new InputHandler(this);
+		screen = new Screen(WIDTH, HEIGHT, sheet);
 
-    private void render() {
-        BufferStrategy bs = getBufferStrategy();
-        if (bs == null) {
-            createBufferStrategy(3);
-            requestFocus();
-            return;
-        }
+		player = new Player(this, key);
+		level = new HouseLevel();
+		level.add(player);
+	}
 
-        int xScroll = player.x - (screen.width - 15) / 2;
-        int yScroll = player.y - (screen.height - 15) / 2;
-        /*if (xScroll < 15)
-            xScroll = 15;
-        if (yScroll < 15)
-            yScroll = 15;
-        if (xScroll > level.width * 16 - screen.width - 16)
-            xScroll = level.width * 16 - screen.width - 16;
-        if (yScroll > level.height * 16 - screen.height - 16)
-            yScroll = level.height * 16 - screen.height - 16;
-        */
-        level.render(screen, xScroll, yScroll);
+	private void update() {
+		key.update();
+		level.update();
+	}
 
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
-                int cc = screen.pixels[x + y * screen.width];
-                if (cc < 6 * 6 * 6)
-                    pixels[x + y * WIDTH] = Color.colors[cc];
-            }
-        }
+	private void render() {
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			requestFocus();
+			return;
+		}
 
-        Graphics g = bs.getDrawGraphics();
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-        g.setColor(java.awt.Color.ORANGE);
-        g.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
-        g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
-        g.dispose();
-        bs.show();
-    }
+		screen.clear();
+		
+		int xScroll = player.x - (screen.width - 15) / 2;
+		int yScroll = player.y - (screen.height - 15) / 2;
 
-    private void oneSecond(int ups, int fps) {
-        frame.setTitle(TITTLE + " || ups: " + ups + ", fps: " + fps + " || " +
-                "player x: " + (player.x >> 4) + ", player y: " + (player.y >> 4));
-    }
+		/*if (xScroll < 15)
+			xScroll = 15;
+		if (yScroll < 15)
+			yScroll = 15;
+		if (xScroll > level.width * 16 - screen.width - 16)
+			xScroll = level.width * 16 - screen.width - 16;
+		if (yScroll > level.height * 16 - screen.height - 16)
+			yScroll = level.height * 16 - screen.height - 16;*/
 
-    @Override
-    public void run() {
-        int ups = 0;
-        int fps = 0;
+		level.render(screen, xScroll, yScroll);
 
-        double nUps = 1_000_000_000 / 30;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long lastTimer = System.currentTimeMillis();
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				int cc = screen.pixels[x + y * screen.width];
+				if (cc < 6 * 6 * 6)
+					pixels[x + y * WIDTH] = Color.colors[cc];
+			}
+		}
 
-        while (running) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / nUps;
-            lastTime = now;
+		Graphics g = bs.getDrawGraphics();
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		g.dispose();
+		bs.show();
+	}
 
-            if (delta > 1) {
-                update();
-                ups++;
-                delta -= 1;
-            }
+	private void oneSecond(int ups, int fps) {
+		frame.setTitle(TITTLE + " || ups: " + ups + ", fps: " + fps + " || " + "player x: " + (player.x >> 4)
+				+ ", player y: " + (player.y >> 4));
+	}
 
-            fps++;
-            render();
+	@Override
+	public void run() {
+		int ups = 0;
+		int fps = 0;
 
-            if (System.currentTimeMillis() - lastTimer > 1000) {
-                lastTimer += 1000;
-                oneSecond(ups, fps);
-                ups = fps = 0;
-            }
-        }
-    }
+		double nUps = 1_000_000_000 / 30;
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long lastTimer = System.currentTimeMillis();
 
-    public synchronized void start() {
-        running = true;
-        new Thread(this, "Jcs Game Loop").start();
-    }
+		while (running) {
+			long now = System.nanoTime();
+			delta += (now - lastTime) / nUps;
+			lastTime = now;
 
-    public synchronized void stop() {
-        running = false;
-    }
+			if (delta > 1) {
+				update();
+				ups++;
+				delta -= 1;
+			}
 
-    public static void main(String[] args) {
-        try {
-            new Main().start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			fps++;
+			render();
+
+			if (System.currentTimeMillis() - lastTimer > 1000) {
+				lastTimer += 1000;
+				oneSecond(ups, fps);
+				ups = fps = 0;
+			}
+		}
+	}
+
+	public synchronized void start() {
+		running = true;
+		new Thread(this, "Jcs Game Loop").start();
+	}
+
+	public synchronized void stop() {
+		running = false;
+	}
+
+	public static void main(String[] args) {
+		try {
+			new Main().start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

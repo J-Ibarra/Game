@@ -39,8 +39,8 @@ public class Screen {
         boolean mirrorX = (bits & BIT_MIRROR_X) > 0;
         boolean mirrorY = (bits & BIT_MIRROR_Y) > 0;
 
-        int xTile = tile % 32;
-        int yTile = tile / 32;
+        int xTile = tile % sheet.column;
+        int yTile = tile / sheet.column;
         int toffs = xTile * 8 + yTile * 8 * sheet.width;
 
         for (int y = 0; y < 8; y++) {
@@ -75,8 +75,8 @@ public class Screen {
         boolean mirrorX = (bits & BIT_MIRROR_X) > 0;
         boolean mirrorY = (bits & BIT_MIRROR_Y) > 0;
 
-        int xTile = tile % 32;
-        int yTile = tile / 32;
+        int xTile = tile % sheet.column;
+        int yTile = tile / sheet.column;
         int toffs = xTile * 8 + yTile * 8 * sheet.width;
 
         for (int y = 0; y < 8; y++) {

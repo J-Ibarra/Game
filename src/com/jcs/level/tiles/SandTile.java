@@ -15,6 +15,7 @@ public class SandTile extends Tile {
         isSand = true;
     }
 
+    @Override
     public void render(Screen screen, Level level, int x, int y) {
 
         int col = Color.get(level.sandColor, -1, -1, level.sandColor - 110);

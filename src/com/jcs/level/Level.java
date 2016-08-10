@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Level {
 
-    public final int width, height;
+    public int width, height;
     public int[] tiles;
     public int updateCount = 0;
 
@@ -22,11 +22,14 @@ public class Level {
 
     private List<Entity> entities = new ArrayList<>();
     public Player player;
-
+    
+    public Level() {
+		// TODO Auto-generated constructor stub
+	}
+   
     public Level(int w, int h) {
         width = w;
         height = h;
-
         init();
     }
 
