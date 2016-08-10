@@ -3,14 +3,20 @@ package com.jcs.level;
 import com.jcs.entity.Entity;
 import com.jcs.entity.Player;
 import com.jcs.gfx.Screen;
+import com.jcs.level.house.HouseLevel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jcs on 5/8/2016.
  */
 public class Level {
+
+    public static Level testLevel = new TestLevel(8, 8);
+    public static Level houseLevel = new HouseLevel();
 
     public int width, height;
     public int[] tiles;
@@ -22,11 +28,11 @@ public class Level {
 
     private List<Entity> entities = new ArrayList<>();
     public Player player;
-    
+
     public Level() {
-		// TODO Auto-generated constructor stub
-	}
-   
+        init();
+    }
+
     public Level(int w, int h) {
         width = w;
         height = h;

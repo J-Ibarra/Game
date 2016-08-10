@@ -15,6 +15,8 @@ public class InputHandler implements KeyListener {
     public Key left = new Key();
     public Key right = new Key();
 
+    public static boolean[] key = new boolean[KeyEvent.KEY_LAST];
+
     private Main main;
 
     public InputHandler(Main main) {
@@ -26,6 +28,7 @@ public class InputHandler implements KeyListener {
     public void releaseAll() {
         for (int i = 0; i < keys.size(); i++) {
             keys.get(i).pressed = false;
+            key[i] = false;
         }
     }
 
@@ -36,6 +39,7 @@ public class InputHandler implements KeyListener {
     }
 
     private void toggle(KeyEvent e, boolean pressed) {
+        key[e.getKeyCode()] = pressed;
         if (e.getKeyCode() == KeyEvent.VK_W)
             up.toggle(pressed);
         if (e.getKeyCode() == KeyEvent.VK_S)
@@ -58,6 +62,9 @@ public class InputHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+            main.stop();
+
         toggle(e, false);
     }
 
