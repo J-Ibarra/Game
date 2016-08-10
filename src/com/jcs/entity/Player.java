@@ -34,8 +34,7 @@ public class Player extends Mob {
 
     @Override
     public void render(Screen screen) {
-
-
+    	
         screen.render(x + 0, y + 0, 31, Color.get(050, 500, 005, -1));
         screen.render(x + 8, y + 0, 31, Color.get(050, 500, 005, -1));
         screen.render(x + 0, y + 8, 31, Color.get(050, 500, 005, -1));

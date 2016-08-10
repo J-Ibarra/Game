@@ -77,7 +77,7 @@ public class Main extends Canvas implements Runnable {
 
         int xScroll = player.x - (screen.width - 15) / 2;
         int yScroll = player.y - (screen.height - 15) / 2;
-        if (xScroll < 15)
+        /*if (xScroll < 15)
             xScroll = 15;
         if (yScroll < 15)
             yScroll = 15;
@@ -85,7 +85,7 @@ public class Main extends Canvas implements Runnable {
             xScroll = level.width * 16 - screen.width - 16;
         if (yScroll > level.height * 16 - screen.height - 16)
             yScroll = level.height * 16 - screen.height - 16;
-
+        */
         level.render(screen, xScroll, yScroll);
 
         for (int y = 0; y < HEIGHT; y++) {
@@ -106,8 +106,8 @@ public class Main extends Canvas implements Runnable {
     }
 
     private void oneSecond(int ups, int fps) {
-        frame.setTitle(TITTLE + " || ups: " + ups + ", fps: " + fps + " ||" +
-                "player x: " + (player.x >> 4) + "player y: " + (player.y >> 4));
+        frame.setTitle(TITTLE + " || ups: " + ups + ", fps: " + fps + " || " +
+                "player x: " + (player.x >> 4) + ", player y: " + (player.y >> 4));
     }
 
     @Override

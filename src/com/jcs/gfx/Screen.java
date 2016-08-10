@@ -64,6 +64,42 @@ public class Screen {
             }
         }
     }
+    
+    public void render(SpriteSheet sheet, int xp, int yp, int tile, int colors) {
+        render(sheet, xp, yp, tile, colors, 0);
+    }
+
+    public void render(SpriteSheet sheet, int xp, int yp, int tile, int colors, int bits) {
+        xp -= xOffset;
+        yp -= yOffset;
+        boolean mirrorX = (bits & BIT_MIRROR_X) > 0;
+        boolean mirrorY = (bits & BIT_MIRROR_Y) > 0;
+
+        int xTile = tile % 32;
+        int yTile = tile / 32;
+        int toffs = xTile * 8 + yTile * 8 * sheet.width;
+
+        for (int y = 0; y < 8; y++) {
+            if (y + yp < 0 || y + yp >= height)
+                continue;
+            int ys = y;
+            if (mirrorY)
+                ys = 7 - y;
+
+            for (int x = 0; x < 8; x++) {
+                if (x + xp < 0 || x + xp >= width)
+                    continue;
+
+                int xs = x;
+                if (mirrorX)
+                    xs = 7 - x;
+
+                int col = (colors >> (sheet.pixels[xs + ys * sheet.width + toffs] * 8)) & 255;
+                if (col < 255)
+                    pixels[(x + xp) + (y + yp) * width] = col;
+            }
+        }
+    }
 
     public void setOffset(int xOffset, int yOffset) {
         this.xOffset = xOffset;
